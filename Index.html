@@ -63,6 +63,39 @@ body {
 #stats-area p, #time-area p {
     margin-bottom: 5px;
 }
+    #side-menu {
+    /* ... (Your other side menu styles) ... */
+    transition: width 0.3s ease-in-out;
+    width: 30%; /* Initial width */
+}
+
+#side-menu.collapsed {
+    width: 0;
+}
+
+#side-menu-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+#side-menu.collapsed #side-menu-toggle {
+    transform: rotate(180deg);
+    left: 0;
+}
+
+#side-menu-content {
+    padding: 20px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+#side-menu.collapsed #side-menu-content {
+    opacity: 0;
+    pointer-events: none;
+}
 </style>
 </head>
 <body>
@@ -77,21 +110,23 @@ body {
     <div id="choices-area"> </div>
 </div>
 
-<div id="side-menu">
-    <img id="profile-image" src="profile.png" alt="Profile">
-    <div id="stats-area">
-        <p>Money: <span id="money-stat">100</span></p>
-        <p>Lust: <span id="lust-stat">0</span></p>
-        <p>Purity: <span id="purity-stat">100</span></p>
-        <p>Corruption: <span id="corruption-stat">0</span></p>
-    </div>
-    <div id="time-area">
-        <p>Time: <span id="game-time">00:00</span></p>
-    </div>
-    <div id="actions-area">
-        <button onclick="showInventory()">Inventory</button>
-        <button onclick="usePhone()">Phone</button>
-        <button onclick="fastTravel()">Fast Travel</button>
+<div id="side-menu">  <div id="side-menu-toggle" onclick="toggleSideMenu()">
+        <span>&gt;</span>  </div>
+    <div id="side-menu-content"> <img id="profile-image" src="profile.png" alt="Profile">
+        <div id="stats-area">
+            <p>Money: <span id="money-stat">100</span></p>
+            <p>Lust: <span id="lust-stat">0</span></p>
+            <p>Purity: <span id="purity-stat">100</span></p>
+            <p>Corruption: <span id="corruption-stat">0</span></p>
+        </div>
+        <div id="time-area">
+            <p>Time: <span id="game-time">00:00</span></p>
+        </div>
+        <div id="actions-area">
+            <button onclick="showInventory()">Inventory</button>
+            <button onclick="usePhone()">Phone</button>
+            <button onclick="fastTravel()">Fast Travel</button>
+        </div>
     </div>
 </div>
 
@@ -100,6 +135,13 @@ body {
 </div>
 
 <script>
+let sideMenuOpen = true;
+
+function toggleSideMenu() {
+    const sideMenu = document.getElementById("side-menu");
+    sideMenu.classList.toggle("collapsed");
+    sideMenuOpen = !sideMenuOpen;
+}
 let stats = {
     money: 100,
     lust: 0,
