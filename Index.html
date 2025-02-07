@@ -1,276 +1,175 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sandbox Game</title>
+<title>Open World Game</title>
 <style>
 body {
-    font-family: sans-serif;
-    display: flex;
-    margin: 0;
-    background-color: #333;
-    color: white;
+  margin: 0; /* Remove default body margin */
+  overflow: hidden; /* Prevent scrollbars */
+  font-family: sans-serif;
 }
 
 #game-container {
-    width: 70%;
-    padding: 20px;
+  display: flex; /* Use flexbox for layout */
+  height: 100vh; /* Full viewport height */
 }
 
-#side-menu {
-    width: 30%;
-    background-color: #444;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    overflow-y: auto;
+#sidebar {
+  width: 250px; /* Fixed width sidebar */
+  background-color: #f0f0f0;
+  padding: 10px;
+  position: relative; /* For collapse button positioning */
+  transition: width 0.3s ease; /* Smooth width transition */
 }
 
-#game-over {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    display: none;
+#sidebar.collapsed {
+  width: 0; /* Hide sidebar */
+  overflow: hidden;
 }
 
-#image-area img {
-    max-width: 100%;
-    height: auto;
+#sidebar-content {
+    /* Ensures content doesn't overflow when collapsing */
+    transition: opacity 0.3s ease;
 }
 
-#choices-area button {
-    margin: 5px;
-    padding: 10px;
-    background-color: #666;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-#choices-area button:hover {
-    background-color: #888;
-}
-
-#stats-area p, #time-area p {
-    margin-bottom: 5px;
-}
-    #side-menu {
-    /* ... (Your other side menu styles) ... */
-    transition: width 0.3s ease-in-out;
-    width: 30%; /* Initial width */
-}
-
-#side-menu.collapsed {
-    width: 0;
-}
-
-#side-menu-toggle {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
-    transform: rotate(0deg);
-    transition: transform 0.3s ease-in-out;
-}
-
-#side-menu.collapsed #side-menu-toggle {
-    transform: rotate(180deg);
-    left: 0;
-}
-
-#side-menu-content {
-    padding: 20px;
-    transition: opacity 0.3s ease-in-out;
-}
-
-#side-menu.collapsed #side-menu-content {
+#sidebar.collapsed #sidebar-content {
     opacity: 0;
-    pointer-events: none;
 }
+
+
+#collapse-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+#game-content {
+  flex: 1; /* Takes up remaining space */
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  overflow: hidden; /* Hide content that overflows the container */
+}
+
+/* Example styling for content within the game content area */
+#game-content > div {
+  text-align: center;
+}
+
 </style>
 </head>
 <body>
 
 <div id="game-container">
-    <div id="image-area">
-        <img id="current-image" src="start_screen.png" alt="Scene Image">
-    </div>
-    <div id="text-area">
-        <p id="game-text">Welcome to the game!</p>
-    </div>
-    <div id="choices-area"> </div>
-</div>
 
-<div id="side-menu">  <div id="side-menu-toggle" onclick="toggleSideMenu()">
-        <span>&gt;</span>  </div>
-    <div id="side-menu-content"> <img id="profile-image" src="profile.png" alt="Profile">
-        <div id="stats-area">
-            <p>Money: <span id="money-stat">100</span></p>
-            <p>Lust: <span id="lust-stat">0</span></p>
-            <p>Purity: <span id="purity-stat">100</span></p>
-            <p>Corruption: <span id="corruption-stat">0</span></p>
-        </div>
-        <div id="time-area">
-            <p>Time: <span id="game-time">00:00</span></p>
-        </div>
-        <div id="actions-area">
-            <button onclick="showInventory()">Inventory</button>
-            <button onclick="usePhone()">Phone</button>
-            <button onclick="fastTravel()">Fast Travel</button>
-        </div>
-    </div>
-</div>
+  <div id="sidebar">
+    <div id="sidebar-content">
+      <h2>Player Info</h2>
+      <p>Name: <span id="player-name">Sabrina</span></p>
+      <p>Day: <span id="current-day">1</span></p>
+      <p>Time: <span id="current-time">Morning</span></p>
+      <p>Purity: <span id="purity">100</span></p>
+      <p>Corruption: <span id="corruption">0</span></p>
+      <p>Lust: <span id="lust">0</span></p>
 
-<div id="game-over">
-    Game Over: Purity has fallen too low.
+      <button onclick="saveGame()">Save</button>
+      <button onclick="loadGame()">Load</button>
+    </div>
+    <span id="collapse-button" onclick="toggleSidebar()">&#x25C0;</span> </div>
+
+  <div id="game-content">
+    <div>
+      <h1>Sabrina's Room</h1>
+      <p>Welcome to your room, Sabrina!</p>
+      <button onclick="advanceTime()">Advance Time</button> <br><br>
+      <button onclick="changeLocation('town')">Go to Town</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
-let inEvent = false; // Add this line with your other variable declarations
+let playerName = "Sabrina";
+let currentDay = 1;
+let currentTime = "Morning";
+let purity = 100;
+let corruption = 0;
+let lust = 0;
+let sidebarVisible = true;
 
-let sideMenuOpen = true;
 
-function toggleSideMenu() {
-    const sideMenu = document.getElementById("side-menu");
-    sideMenu.classList.toggle("collapsed");
-    sideMenuOpen = !sideMenuOpen;
-let stats = {
-    money: 100,
-    lust: 0,
-    purity: 100,
-    corruption: 0
-};
-let gameTime = 0; // In minutes
-let sideMenuOpen = true;
-let inEvent = false; // Add inEvent flag
-
-const inventoryButton = document.getElementById("inventory-button");
-const phoneButton = document.getElementById("phone-button");
-const fastTravelButton = document.getElementById("fast-travel-button");
-const advanceTimeButton = document.getElementById("advance-time-button");
-
-function showText(text) {
-    document.getElementById("game-text").textContent = text;
+function updateStats() {
+    document.getElementById("player-name").textContent = playerName;
+    document.getElementById("current-day").textContent = currentDay;
+    document.getElementById("current-time").textContent = currentTime;
+    document.getElementById("purity").textContent = purity;
+    document.getElementById("corruption").textContent = corruption;
+    document.getElementById("lust").textContent = lust;
 }
 
-function showImage(imageSrc) {
-    document.getElementById("current-image").src = imageSrc;
+function advanceTime() {
+  switch (currentTime) {
+    case "Morning": currentTime = "Noon"; break;
+    case "Noon": currentTime = "Afternoon"; break;
+    case "Afternoon": currentTime = "Evening"; break;
+    case "Evening": currentTime = "Night"; break;
+    case "Night": currentTime = "Late Night"; break;
+    case "Late Night": 
+      currentTime = "Morning"; 
+      currentDay++; 
+      break;
+  }
+  updateStats();
 }
 
-function showChoices(choices) {
-    let choicesArea = document.getElementById("choices-area");
-    choicesArea.innerHTML = "";
+function changeLocation(location) {
+    // Basic location changing logic.
+    const gameContent = document.getElementById("game-content");
+    gameContent.innerHTML = ""; // Clear existing content
 
-    choices.forEach(choice => {
-        let button = document.createElement("button");
-        button.textContent = choice.text;
-        button.onclick = choice.action;
-        choicesArea.appendChild(button);
-    });
-}
-
-function updateStatsDisplay() {
-    document.getElementById("money-stat").textContent = stats.money;
-    document.getElementById("lust-stat").textContent = stats.lust;
-    document.getElementById("purity-stat").textContent = stats.purity;
-    document.getElementById("corruption-stat").textContent = stats.corruption;
-}
-
-function updateGameTime() {
-    let hours = Math.floor(gameTime / 60);
-    let minutes = gameTime % 60;
-    hours = hours.toString().padStart(2, '0');
-    minutes = minutes.toString().padStart(2, '0');
-    document.getElementById("game-time").textContent = `<span class="math-inline">\{hours\}\:</span>{minutes}`;
-}
-
-setInterval(() => {
-    gameTime++;
-    updateGameTime();
-}, 60000);
-
-function showInventory() {
-    showText("You open your inventory. (Functionality to be implemented)");
-}
-
-function usePhone() {
-    showText("You check your phone. (Functionality to be implemented)");
-}
-
-function fastTravel() {
-    showText("You try to fast travel. (Functionality to be implemented)");
-}
-
-function checkGameOver() {
-    if (stats.purity <= 0) {
-        document.getElementById("game-over").style.display = "flex";
-        document.getElementById("side-menu").style.display = "none";
-        document.getElementById("game-container").style.display = "none";
+    if (location === 'town') {
+        gameContent.innerHTML = "<div><h1>Town Square</h1><p>You are in the town square.</p><button onclick='changeLocation(\"room\")'>Go back to Room</button></div>";
+    } else if (location === 'room') {
+       gameContent.innerHTML = "<div><h1>Sabrina's Room</h1><p>Welcome to your room, Sabrina!</p><button onclick='advanceTime()'>Advance Time</button><br><br><button onclick='changeLocation(\"town\")'>Go to Town</button></div>";
     }
+
 }
 
-function toggleSideMenu() {
-    const sideMenu = document.getElementById("side-menu");
-    sideMenu.classList.toggle("collapsed");
-    sideMenuOpen = !sideMenuOpen;
+
+function saveGame() {
+  localStorage.setItem('playerName', playerName);
+  localStorage.setItem('currentDay', currentDay);
+  localStorage.setItem('currentTime', currentTime);
+  localStorage.setItem('purity', purity);
+  localStorage.setItem('corruption', corruption);
+  localStorage.setItem('lust', lust);
+  alert("Game Saved!");
 }
 
-function setEventStatus(isEvent) {
-    inEvent = isEvent;
-    inventoryButton.disabled = isEvent;
-    phoneButton.disabled = isEvent;
-    fastTravelButton.disabled = isEvent;
-    advanceTimeButton.disabled = isEvent;
+function loadGame() {
+  playerName = localStorage.getItem('playerName') || "Sabrina"; // Default if no save
+  currentDay = parseInt(localStorage.getItem('currentDay')) || 1;
+  currentTime = localStorage.getItem('currentTime') || "Morning";
+  purity = parseInt(localStorage.getItem('purity')) || 100;
+  corruption = parseInt(localStorage.getItem('corruption')) || 0;
+  lust = parseInt(localStorage.getItem('lust')) || 0;
+  updateStats();
+  alert("Game Loaded!");
 }
 
-let scenes = {
-    "start": {
-        image: "start_screen.png",
-        text: "You find yourself at a crossroads.",
-        choices: [
-            { text: "Go to the market", action: () => goToScene("market") },
-            { text: "Explore the forest", action: () => goToScene("forest") }
-        ]
-    },
-    "market": {
-        image: "market.png",
-        text: "The market is bustling with activity.",
-        choices: [
-            { text: "Buy some supplies", action: () => { stats.money -= 20; updateStatsDisplay(); showText("You bought supplies!"); } },
-            { text: "Visit the shady merchant", action: () => { stats.money -= 50; stats.lust += 10; stats.purity -= 5; stats.corruption += 5; updateStatsDisplay(); checkGameOver(); showText("You made a shady deal."); } }, // Check game over here
-            { text: "Go back to the crossroads", action: () => goToScene("start") }
-        ]
-    },
-    "forest": {
-        image: "forest.png",
-        text: "The forest is dark and mysterious.",
-        choices: [
-            { text: "Venture deeper", action: () => {stats.lust += 5; stats.purity -= 2; updateStatsDisplay(); checkGameOver(); showText("You feel a strange pull.");} }, // Check game over here
-            { text: "Go back to the crossroads", action: () => goToScene("start") }
-        ]
-    }
-};
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('collapsed');
+  const button = document.getElementById('collapse-button');
+  button.textContent = sidebar.classList.contains('collapsed') ? '&#x25B6;' : '&#x25C0;'; // Change arrow
+  sidebarVisible = !sidebarVisible;
 
-function goToScene(sceneName) {
-    let scene = scenes[sceneName];
-    showImage(scene.image);
-    showText(scene.text);
-    showChoices(scene.choices);
 }
 
-// Start the game
-goToScene("start");
-updateStatsDisplay(); // Initial stats display
-updateGameTime(); // Initial time display
+// Initial update on page load
+updateStats();
 
 </script>
 
