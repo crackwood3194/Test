@@ -108,8 +108,72 @@ body {
         title: "Your House",
         description: "Welcome home, Sabrina. It's cozy here.",
         buttons: [
-            { text: "Go back to Town", action: "changeLocation", target: "town" },
-            // ... other house-related actions
+            { text: "Leave House", action: "changeLocation", target: "town" },
+            { text: "Living Room", action: "changeLocation", target: "livingRoom" },
+            { text: "Kitchen", action: "changeLocation", target: "kitchen" },
+            { text: "Parents' Bedroom", action: "changeLocation", target: "parentsBedroom" },
+            { text: "Brother's Bedroom", action: "changeLocation", target: "brothersBedroom" },
+            { text: "Your Room", action: "changeLocation", target: "yourRoom" },
+            { text: "Yard", action: "changeLocation", target: "yard" },
+            { text: "Basement", action: "changeLocation", target: "basement" }
+        ]
+    },
+    livingRoom: {
+        title: "Living Room",
+        description: "The living room is comfortably furnished.",
+        buttons: [
+            { text: "Go back to House", action: "changeLocation", target: "house" },
+            // Add living room actions here
+        ]
+    },
+    kitchen: {
+        title: "Kitchen",
+        description: "The smell of food lingers in the air.",
+        buttons: [
+            { text: "Go back to House", action: "changeLocation", target: "house" },
+            { text: "Check the Fridge", action: "checkFridge" }, // Example action
+            // Add more kitchen actions
+        ]
+    },
+    parentsBedroom: {
+        title: "Parents' Bedroom",
+        description: "Your parents' bedroom is neat and tidy.",
+        buttons: [
+            { text: "Go back to House", action: "changeLocation", target: "house" },
+            // Add actions for parents' bedroom
+        ]
+    },
+    brothersBedroom: {
+        title: "Brother's Bedroom",
+        description: "Your brother's room is a mess!",
+        buttons: [
+            { text: "Go back to House", action: "changeLocation", target: "house" },
+            // Add actions for brother's bedroom
+        ]
+    },
+    yourRoom: {
+        title: "Your Room",
+        description: "This is your personal space.",
+        buttons: [
+            { text: "Go back to House", action: "changeLocation", target: "house" },
+            { text: "Rest", action: "rest" } // Example action
+            // Add actions for your room
+        ]
+    },
+    yard: {
+        title: "Yard",
+        description: "The yard is green and spacious.",
+        buttons: [
+            { text: "Go back to House", action: "changeLocation", target: "house" },
+            // Add actions for the yard
+        ]
+    },
+    basement: {
+        title: "Basement",
+        description: "The basement is dark and a bit spooky.",
+        buttons: [
+            { text: "Go back to House", action: "changeLocation", target: "house" },
+            // Add actions for the basement
         ]
     },
     university: {
