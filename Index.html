@@ -24,6 +24,7 @@ body {
 
 #sidebar.collapsed {
   width: 0;
+  min-width: 20px; /* Adjust this value as needed */
   overflow: hidden;
 }
 
@@ -45,10 +46,6 @@ body {
 
 #collapse-button::before {
   content: '\25C0';
-}
-  
-#sidebar.collapsed #collapse-button {
-   right: 20px; /* Adjust to bring arrow out when collapsed */
 }
   
 #sidebar.collapsed #collapse-button::before {
@@ -171,10 +168,9 @@ function loadGame() {
 function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   sidebar.classList.toggle('collapsed');
-  sidebarVisible = !sidebarVisible; // Keep track of visibility (optional)
+  sidebarVisible = !sidebarVisible; 
 }
 
-// Initial update on page load
 updateStats();
 
 </script>
