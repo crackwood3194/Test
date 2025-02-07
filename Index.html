@@ -163,7 +163,7 @@ function toggleSidebar() {
   const sidebar = document.getElementById('sidebar');
   sidebar.classList.toggle('collapsed');
   const button = document.getElementById('collapse-button');
-  button.textContent = sidebar.classList.contains('collapsed') ? '&#x25B6;' : '&#x25C0;'; // Change arrow
+  button.textContent = sidebar.classList.contains('collapsed') ? '&#x25B6;' : '&#x25C0;'; // Corrected arrow logic
   sidebarVisible = !sidebarVisible;
 
 }
