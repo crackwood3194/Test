@@ -4,31 +4,30 @@
 <title>Open World Game</title>
 <style>
 body {
-  margin: 0; /* Remove default body margin */
-  overflow: hidden; /* Prevent scrollbars */
+  margin: 0; 
+  overflow: hidden; 
   font-family: sans-serif;
 }
 
 #game-container {
-  display: flex; /* Use flexbox for layout */
-  height: 100vh; /* Full viewport height */
+  display: flex; 
+  height: 100vh;
 }
 
 #sidebar {
-  width: 250px; /* Fixed width sidebar */
+  width: 250px; 
   background-color: #f0f0f0;
   padding: 10px;
-  position: relative; /* For collapse button positioning */
-  transition: width 0.3s ease; /* Smooth width transition */
+  position: relative; 
+  transition: width 0.3s ease;
 }
 
 #sidebar.collapsed {
-  width: 0; /* Hide sidebar */
+  width: 0;
   overflow: hidden;
 }
 
 #sidebar-content {
-    /* Ensures content doesn't overflow when collapsing */
     transition: opacity 0.3s ease;
 }
 
@@ -36,34 +35,30 @@ body {
     opacity: 0;
 }
 
-
 #collapse-button {
   position: absolute;
   top: 10px;
   right: 10px;
   cursor: pointer;
-  padding: 5px; /* Add some padding for better clickability */
+  padding: 5px;
 }
 
-#collapse-button::before { /* Use ::before pseudo-element */
-  content: '\25C0'; /* Unicode for left arrow */
-  transition: transform 0.3s ease; /* Smooth rotation (optional) */
+#collapse-button::before {
+  content: '\25C0';
 }
 
 #sidebar.collapsed #collapse-button::before {
-  content: '\25B6'; /* Unicode for right arrow */
+  content: '\25B6';
 }
 
 #game-content {
-  flex: 1; /* Takes up remaining space */
+  flex: 1; 
   background-color: #e0e0e0;
   display: flex;
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  overflow: hidden; /* Hide content that overflows the container */
+  justify-content: center;
+  overflow: hidden;
 }
 
-/* Example styling for content within the game content area */
 #game-content > div {
   text-align: center;
 }
