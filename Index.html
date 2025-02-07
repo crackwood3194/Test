@@ -135,13 +135,14 @@ body {
 </div>
 
 <script>
+let inEvent = false; // Add this line with your other variable declarations
+
 let sideMenuOpen = true;
 
 function toggleSideMenu() {
     const sideMenu = document.getElementById("side-menu");
     sideMenu.classList.toggle("collapsed");
     sideMenuOpen = !sideMenuOpen;
-}
 let stats = {
     money: 100,
     lust: 0,
@@ -149,6 +150,13 @@ let stats = {
     corruption: 0
 };
 let gameTime = 0; // In minutes
+let sideMenuOpen = true;
+let inEvent = false; // Add inEvent flag
+
+const inventoryButton = document.getElementById("inventory-button");
+const phoneButton = document.getElementById("phone-button");
+const fastTravelButton = document.getElementById("fast-travel-button");
+const advanceTimeButton = document.getElementById("advance-time-button");
 
 function showText(text) {
     document.getElementById("game-text").textContent = text;
@@ -182,14 +190,13 @@ function updateGameTime() {
     let minutes = gameTime % 60;
     hours = hours.toString().padStart(2, '0');
     minutes = minutes.toString().padStart(2, '0');
-    document.getElementById("game-time").textContent = `${hours}:${minutes}`;
+    document.getElementById("game-time").textContent = `<span class="math-inline">\{hours\}\:</span>{minutes}`;
 }
 
-// Example: Increment time every minute (you can use setInterval later)
 setInterval(() => {
     gameTime++;
     updateGameTime();
-}, 60000); // 60000 milliseconds = 1 minute
+}, 60000);
 
 function showInventory() {
     showText("You open your inventory. (Functionality to be implemented)");
@@ -209,6 +216,20 @@ function checkGameOver() {
         document.getElementById("side-menu").style.display = "none";
         document.getElementById("game-container").style.display = "none";
     }
+}
+
+function toggleSideMenu() {
+    const sideMenu = document.getElementById("side-menu");
+    sideMenu.classList.toggle("collapsed");
+    sideMenuOpen = !sideMenuOpen;
+}
+
+function setEventStatus(isEvent) {
+    inEvent = isEvent;
+    inventoryButton.disabled = isEvent;
+    phoneButton.disabled = isEvent;
+    fastTravelButton.disabled = isEvent;
+    advanceTimeButton.disabled = isEvent;
 }
 
 let scenes = {
