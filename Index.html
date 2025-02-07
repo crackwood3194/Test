@@ -46,7 +46,11 @@ body {
 #collapse-button::before {
   content: '\25C0';
 }
-
+  
+#sidebar.collapsed #collapse-button {
+   right: -5px; /* Adjust to bring arrow out when collapsed */
+}
+  
 #sidebar.collapsed #collapse-button::before {
   content: '\25B6';
 }
