@@ -86,17 +86,81 @@ body {
     <span id="collapse-button" onclick="toggleSidebar()"></span> </div>
 
   <div id="game-content">
-    <div>
-      <h1>Sabrina's Room</h1>
-      <p>Welcome to your room, Sabrina!</p>
-      <button onclick="advanceTime()">Advance Time</button> <br><br>
-      <button onclick="changeLocation('town')">Go to Town</button>
-    </div>
   </div>
 
-</div>
-
 <script>
+  const locations = {
+    town: {
+        title: "Town Square",
+        description: "You are in the bustling town square.  Many places to go!",
+        buttons: [
+            { text: "Go back to Room", action: "changeLocation", target: "room" },
+            { text: "Visit Your House", action: "changeLocation", target: "house" },
+            { text: "Go to the University", action: "changeLocation", target: "university" },
+            { text: "Go to the Mall", action: "changeLocation", target: "mall" },
+            { text: "Relax at the Park", action: "changeLocation", target: "park" },
+            { text: "Grab Coffee at the Cafe", action: "changeLocation", target: "cafe" },
+            { text: "Work out at the Gym", action: "changeLocation", target: "gym" },
+            { text: "Study at the Library", action: "changeLocation", target: "library" }
+        ]
+    },
+    house: {
+        title: "Your House",
+        description: "Welcome home, Sabrina. It's cozy here.",
+        buttons: [
+            { text: "Go back to Town", action: "changeLocation", target: "town" },
+            // ... other house-related actions
+        ]
+    },
+    university: {
+        title: "University",
+        description: "The halls of learning await.",
+        buttons: [
+            { text: "Go back to Town", action: "changeLocation", target: "town" },
+            // ... university actions
+        ]
+    },
+    mall: {
+        title: "Mall",
+        description: "Shop 'til you drop!",
+        buttons: [
+            { text: "Go back to Town", action: "changeLocation", target: "town" },
+            // ... mall actions
+        ]
+    },
+    park: {
+        title: "Park",
+        description: "A peaceful place to unwind.",
+        buttons: [
+            { text: "Go back to Town", action: "changeLocation", target: "town" },
+            // ... park actions
+        ]
+    },
+    cafe: {
+        title: "Cafe",
+        description: "The aroma of coffee fills the air.",
+        buttons: [
+            { text: "Go back to Town", action: "changeLocation", target: "town" },
+            // ... cafe actions
+        ]
+    },
+    gym: {
+        title: "Gym",
+        description: "Time to get your sweat on!",
+        buttons: [
+            { text: "Go back to Town", action: "changeLocation", target: "town" },
+            // ... gym actions
+        ]
+    },
+    library: {
+        title: "Library",
+        description: "Silence and knowledge abound.",
+        buttons: [
+            { text: "Go back to Town", action: "changeLocation", target: "town" },
+        ]
+    }
+};
+changeLocation('town');
 let playerName = "Sabrina";
 let currentDay = 1;
 let currentTime = "Morning";
