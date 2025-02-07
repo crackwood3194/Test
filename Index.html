@@ -7,18 +7,18 @@ body {
     font-family: sans-serif;
     display: flex;
     margin: 0;
-    background-color: #333; /* Dark grey background */
-    color: white; /* White text */
+    background-color: #333;
+    color: white;
 }
 
 #game-container {
     width: 70%;
-    padding: 20px; /* Add padding for content spacing */
+    padding: 20px;
 }
 
 #side-menu {
     width: 30%;
-    background-color: #444; /* Slightly darker grey for the side menu */
+    background-color: #444;
     padding: 20px;
     position: fixed;
     top: 0;
@@ -42,7 +42,6 @@ body {
     display: none;
 }
 
-/* Styling for elements */
 #image-area img {
     max-width: 100%;
     height: auto;
@@ -51,140 +50,97 @@ body {
 #choices-area button {
     margin: 5px;
     padding: 10px;
-    background-color: #666; /* Darker button background */
+    background-color: #666;
     color: white;
-    border: none; /* Remove default borders */
-    cursor: pointer; /* Make buttons look clickable */
+    border: none;
+    cursor: pointer;
 }
 
 #choices-area button:hover {
-    background-color: #888; /* Slightly lighter on hover */
+    background-color: #888;
 }
 
-#stats-area p, #time-area p { /* Style for stats and time */
-    margin-bottom: 5px; /* Add spacing between lines */
+#stats-area p, #time-area p {
+    margin-bottom: 5px;
 }
-
-/* ... (rest of the CSS styles as before) ... */
-</style>
-</head>
-<body>
-
-<script>
-// ... (JavaScript code remains the same) ...
-</script>
-
-</body>
-</html><!DOCTYPE html>
-<html>
-<head>
-<title>Sandbox Game</title>
-<style>
-  body { font-family: sans-serif; display: flex; }
-  #game-container { width: 70%; }
-  #side-menu { 
-    width: 30%; 
-    background-color: #f0f0f0; 
-    padding: 20px; 
-    position: fixed; /* Key change: Fixed positioning */
-    top: 0;          /* Position at the top */
-    right: 0;        /* Position on the right */
-    height: 100%;     /* Make it full height */
-    overflow-y: auto; /* Add scroll if content overflows */
-}
-/* ... (rest of the CSS styles as before) ... */
-#game-over {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black overlay */
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2em;
-    display: none; /* Initially hidden */
-  }
 </style>
 </head>
 <body>
 
 <div id="game-container">
-  <div id="image-area">
-    <img id="current-image" src="start_screen.png" alt="Scene Image">
-  </div>
-  <div id="text-area">
-    <p id="game-text">Welcome to the game!</p>
-  </div>
-  <div id="choices-area"> </div>
+    <div id="image-area">
+        <img id="current-image" src="start_screen.png" alt="Scene Image">
+    </div>
+    <div id="text-area">
+        <p id="game-text">Welcome to the game!</p>
+    </div>
+    <div id="choices-area"> </div>
 </div>
 
 <div id="side-menu">
-  <img id="profile-image" src="profile.png" alt="Profile">
-  <div id="stats-area">
-    <p>Money: <span id="money-stat">100</span></p>
-    <p>Lust: <span id="lust-stat">0</span></p>
-    <p>Purity: <span id="purity-stat">100</span></p>
-    <p>Corruption: <span id="corruption-stat">0</span></p>
-  </div>
+    <img id="profile-image" src="profile.png" alt="Profile">
+    <div id="stats-area">
+        <p>Money: <span id="money-stat">100</span></p>
+        <p>Lust: <span id="lust-stat">0</span></p>
+        <p>Purity: <span id="purity-stat">100</span></p>
+        <p>Corruption: <span id="corruption-stat">0</span></p>
+    </div>
     <div id="time-area">
-    <p>Time: <span id="game-time">00:00</span></p>
-  </div>
-  <div id="actions-area">
-    <button onclick="showInventory()">Inventory</button>
-    <button onclick="usePhone()">Phone</button>
-    <button onclick="fastTravel()">Fast Travel</button>
-  </div>
+        <p>Time: <span id="game-time">00:00</span></p>
+    </div>
+    <div id="actions-area">
+        <button onclick="showInventory()">Inventory</button>
+        <button onclick="usePhone()">Phone</button>
+        <button onclick="fastTravel()">Fast Travel</button>
+    </div>
 </div>
 
 <div id="game-over">
-  Game Over: Purity has fallen too low.
+    Game Over: Purity has fallen too low.
 </div>
 
 <script>
 let stats = {
-  money: 100,
-  lust: 0,
-  purity: 100,
-  corruption: 0
+    money: 100,
+    lust: 0,
+    purity: 100,
+    corruption: 0
 };
 let gameTime = 0; // In minutes
 
 function showText(text) {
-  document.getElementById("game-text").textContent = text;
+    document.getElementById("game-text").textContent = text;
 }
 
 function showImage(imageSrc) {
-  document.getElementById("current-image").src = imageSrc;
+    document.getElementById("current-image").src = imageSrc;
 }
 
 function showChoices(choices) {
-  let choicesArea = document.getElementById("choices-area");
-  choicesArea.innerHTML = ""; // Clear existing choices
+    let choicesArea = document.getElementById("choices-area");
+    choicesArea.innerHTML = "";
 
-  choices.forEach(choice => {
-    let button = document.createElement("button");
-    button.textContent = choice.text;
-    button.onclick = choice.action;
-    choicesArea.appendChild(button);
-  });
+    choices.forEach(choice => {
+        let button = document.createElement("button");
+        button.textContent = choice.text;
+        button.onclick = choice.action;
+        choicesArea.appendChild(button);
+    });
 }
 
 function updateStatsDisplay() {
-  document.getElementById("money-stat").textContent = stats.money;
-  document.getElementById("lust-stat").textContent = stats.lust;
-  document.getElementById("purity-stat").textContent = stats.purity;
-  document.getElementById("corruption-stat").textContent = stats.corruption;
+    document.getElementById("money-stat").textContent = stats.money;
+    document.getElementById("lust-stat").textContent = stats.lust;
+    document.getElementById("purity-stat").textContent = stats.purity;
+    document.getElementById("corruption-stat").textContent = stats.corruption;
 }
 
 function updateGameTime() {
-  let hours = Math.floor(gameTime / 60);
-  let minutes = gameTime % 60;
-  hours = hours.toString().padStart(2, '0');
-  minutes = minutes.toString().padStart(2, '0');
-  document.getElementById("game-time").textContent = `${hours}:${minutes}`;
+    let hours = Math.floor(gameTime / 60);
+    let minutes = gameTime % 60;
+    hours = hours.toString().padStart(2, '0');
+    minutes = minutes.toString().padStart(2, '0');
+    document.getElementById("game-time").textContent = `${hours}:${minutes}`;
 }
 
 // Example: Increment time every minute (you can use setInterval later)
@@ -194,23 +150,23 @@ setInterval(() => {
 }, 60000); // 60000 milliseconds = 1 minute
 
 function showInventory() {
-  showText("You open your inventory. (Functionality to be implemented)");
+    showText("You open your inventory. (Functionality to be implemented)");
 }
 
 function usePhone() {
-  showText("You check your phone. (Functionality to be implemented)");
+    showText("You check your phone. (Functionality to be implemented)");
 }
 
 function fastTravel() {
-  showText("You try to fast travel. (Functionality to be implemented)");
+    showText("You try to fast travel. (Functionality to be implemented)");
 }
 
 function checkGameOver() {
-  if (stats.purity <= 0) {
-    document.getElementById("game-over").style.display = "flex"; // Show game over screen
-    document.getElementById("side-menu").style.display = "none"; // Hide side menu
-    document.getElementById("game-container").style.display = "none"; // Hide game container
-  }
+    if (stats.purity <= 0) {
+        document.getElementById("game-over").style.display = "flex";
+        document.getElementById("side-menu").style.display = "none";
+        document.getElementById("game-container").style.display = "none";
+    }
 }
 
 let scenes = {
@@ -242,10 +198,10 @@ let scenes = {
 };
 
 function goToScene(sceneName) {
-  let scene = scenes[sceneName];
-  showImage(scene.image);
-  showText(scene.text);
-  showChoices(scene.choices);
+    let scene = scenes[sceneName];
+    showImage(scene.image);
+    showText(scene.text);
+    showChoices(scene.choices);
 }
 
 // Start the game
